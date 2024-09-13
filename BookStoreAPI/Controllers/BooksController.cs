@@ -97,8 +97,40 @@ namespace BookStoreAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        /// <summary>
+        /// Deletes a book from the database.
+        /// </summary>
+        /// <param name="id">The ID of the book to delete.</param>
+        /// <returns>An IActionResult indicating the result of the delete operation.</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteBook(int id)
+        {
+            try
+            {
+                _bookStoreDataService.DeleteBook(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        /// <summary>
+        /// Searches for books in the database based on a search term.
+        /// </summary>
+        /// <param name="searchTerm">The search term to match against book titles and authors.</param>
+        /// <returns>An IEnumerable of Book objects that match the search term.</returns>
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IEnumerable<Book> SearchBooks(string searchTerm)
+        {
+            return _bookStoreDataService.SearchBooks(searchTerm);
+        }
 
 
+        
 
     }
 }
