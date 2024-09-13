@@ -128,6 +128,16 @@ namespace BookStoreAPI.Controllers
         {
             return _bookStoreDataService.SearchBooks(searchTerm);
         }
+        /// <summary>
+        /// Retrieves all authors from the database.
+        /// </summary>
+        /// <returns>An IEnumerable of string representing the authors.</returns>
+        [HttpGet("authors")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IEnumerable<string> GetAuthors()
+        {
+            return _bookStoreDataService.GetBooks().Select(b => b.Author).Distinct();
+        }
 
 
         
